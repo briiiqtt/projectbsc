@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="/users/register" method="post" name="userForm">
+		id: <input type="text" name="id" id="id">
+		password: <input type="text" name="password" id="password">
+		<button id="btn" type="button">register</button>
+	</form>
+</body>
+
+<script>
+	document.getElementById('btn').addEventListener('click',function(){
+		
+		document.userForm.submit();
+		
+	});
+</script>
+</html>
