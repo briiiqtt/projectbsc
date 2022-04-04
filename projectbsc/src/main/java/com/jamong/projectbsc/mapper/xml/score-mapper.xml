@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jamong.projectbsc.mapper.ScoreMapper">
+	
+	<insert id="recordScore" parameterType="com.jamong.projectbsc.dto.Score">
+		insert into
+			scores(
+				id,
+				played_date,
+				score
+			)
+			values (
+				#{id},
+				sysdate,				
+				#{score}
+			)
+	</insert>
+	
+	<select id="getScore" resultType="map">
+		select
+			s.*
+		from
+			scores s
+    	join
+    		users u
+		    on s.id = u.id
+	    --where
+	    	--played_date
+	</select>
+	
+</mapper>

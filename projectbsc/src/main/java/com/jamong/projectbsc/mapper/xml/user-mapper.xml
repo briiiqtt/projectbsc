@@ -7,11 +7,18 @@
 			users (
 				id,
 				password
-				)
+			)
 			values(
 				#{id},
 				#{password}
 			)
 	</insert>
 
+	<select id="userList" resultType="com.jamong.projectbsc.dto.User">
+		select
+			*
+		from
+			users
+	</select> 
+	
 </mapper>

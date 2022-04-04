@@ -1,5 +1,7 @@
 package com.jamong.projectbsc.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,11 @@ public class UserServiceImpl implements UserService {
 			return "users/error";
 		}
 		return "home";
+	}
+
+	@Override
+	public List<User> userList() {
+		return userMapper.userList();
 	}
 
 }
