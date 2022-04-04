@@ -16,16 +16,19 @@
 			)
 	</insert>
 	
-	<select id="getScore" resultType="map">
+	<select id="getRank" resultType="map" parameterType="map">
 		select
-			s.*
+			s.id, max(s.score) "SCORE"
 		from
 			scores s
     	join
     		users u
 		    on s.id = u.id
-	    --where
-	    	--played_date
+	    where
+            1=1
+        	and to_char(played_date) = to_char(sysdate)
+        group by s.id
+        order by 2 desc
 	</select>
 	
 </mapper>

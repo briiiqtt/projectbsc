@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.jamong.projectbsc.dto.User;
+import com.jamong.projectbsc.service.ScoreService;
 import com.jamong.projectbsc.service.UserService;
 
 @Controller
@@ -16,6 +17,8 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	@Autowired
+	ScoreService scoreService;
 	
 	@GetMapping("register")
 	public String registerUser() {
@@ -27,11 +30,11 @@ public class UserController {
 		return userService.addUser(user);
 	}
 	
-	@GetMapping("list")
+	@GetMapping("rank")
 	public String userList(Model model) {
-		model.addAttribute("users", userService.userList());
-		model.addAttribute("");
-		return "users/list";
+		model.addAttribute("data", scoreService.getTotalRank());
+		System.out.println(scoreService.getTotalRank());
+		return "users/rank";
 	}
 	
 }

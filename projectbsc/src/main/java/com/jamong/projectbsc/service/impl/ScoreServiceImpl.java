@@ -1,5 +1,8 @@
 package com.jamong.projectbsc.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,11 @@ public class ScoreServiceImpl implements ScoreService{
 	@Override
 	public int recordScore(Score score) {
 		return scoreMapper.recordScore(score);
+	}
+
+	@Override
+	public List<Map> getTotalRank() {
+		return scoreMapper.getRank();
 	}
 
 }
