@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-    <h1>rank</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>score</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="d : ${data}">
-                <td th:text="${d.ID}"></td>
-                <td th:text="${d.SCORE}"></td>
-            </tr>
-        </tbody>
-    </table>
+	<div align="center">
+	    <h1>rank</h1>
+	    <div style="border: 1px solid black; width: 500px">
+		    <table border="1">
+		        <thead>
+		            <tr>
+		                <th>id</th>
+		                <th>score</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr th:each="d : ${data}">
+		                <td th:text="${d.ID}"></td>
+		                <td th:text="${d.SCORE}"></td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+	</div>
 </body>
 </html>

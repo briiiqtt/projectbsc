@@ -21,4 +21,13 @@
 			users
 	</select> 
 	
+	<select id="getPassword" resultType="string">
+		select
+			password
+		from
+			users
+		where
+			id = #{id}
+	</select>
+	
 </mapper>

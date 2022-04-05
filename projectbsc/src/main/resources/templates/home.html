@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 th:text="${time}">dd</h1>
+	<div align="center">
+		<div>
+			<h1>로그인하세용</h1>
+		</div>
+		<div style="border: 1px solid black; width: 500px">
+			<form action="/users/login" method="post">
+				<input type="text" id="id" name="id"><br>
+				<input type="password" id="password" name="password"><br>
+				<button>login</button>
+			</form>
+			<br>
+		<button onclick="document.location='/users/register'">회원가입</button>	
+		</div>
+	</div>
 </body>
 </html>

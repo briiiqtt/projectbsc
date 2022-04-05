@@ -37,4 +37,14 @@ public class UserController {
 		return "users/rank";
 	}
 	
+	@PostMapping("login")
+	public String login(Model model, User user) {
+		if(userService.login(user)) {
+			model.addAttribute("userId",user.getId());
+			return "game/game";
+		}else {
+			return "users/error";
+		}
+	}
+	
 }

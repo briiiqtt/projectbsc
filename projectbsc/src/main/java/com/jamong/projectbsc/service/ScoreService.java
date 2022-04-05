@@ -7,6 +7,6 @@ import com.jamong.projectbsc.dto.Score;
 
 public interface ScoreService {
 	
-	public int recordScore(Score score);
-	public List<Map> getTotalRank();
+	int recordScore(Score score);
+	List<Map> getTotalRank();
 }

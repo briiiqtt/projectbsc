@@ -30,4 +30,9 @@ public class UserServiceImpl implements UserService {
 		return userMapper.userList();
 	}
 
+	@Override
+	public boolean login(User user) {
+		return user.getPassword().equals(userMapper.getPassword(user));
+	}
+
 }

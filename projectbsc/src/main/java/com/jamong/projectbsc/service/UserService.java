@@ -6,6 +6,7 @@ import com.jamong.projectbsc.dto.User;
 
 public interface UserService {
 
-	public String addUser(User user);
-	public List<User> userList();
+	String addUser(User user);
+	List<User> userList();
+	boolean login(User user);
 }

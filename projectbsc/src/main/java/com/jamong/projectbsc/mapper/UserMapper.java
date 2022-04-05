@@ -11,6 +11,7 @@ import com.jamong.projectbsc.dto.User;
 @Mapper
 public interface UserMapper {
 
-	public int addUser(User user);
-	public List<User> userList();
+	int addUser(User user);
+	List<User> userList();
+	String getPassword(User user);
 }
