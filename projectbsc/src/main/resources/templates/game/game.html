@@ -832,10 +832,9 @@
 					method: 'post',
 					body: formData
 				})
-				.then(r=>r.json())
-				.then(json=>{
-					console.log(json);
-				})
+				.then(()=>{
+					alert('등록됨');
+				});
 				
 			},
 
