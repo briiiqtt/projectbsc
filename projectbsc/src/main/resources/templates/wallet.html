@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <button id="btn">요청</button>
+    </div>
+</body>
+
+<script>
+    document.getElementById('btn').addEventListener('click', function () {
+        getBalance();
+    })
+
+
+
+    let auth = 'Basic S0FTS0xQVzNPVjdURVpDNUtENEJOMEJJOlhoWnhneEhOaFh1R0NVaXd6MkJ2WVRUOHhvS2kwQms5UFpoamE4OEQ=';
+    let cmd = '/v1/klaytn';
+    let userAddress = '0x175bF3856581A3a5B01c5644c01F46C1A63E141D';
+
+    function getBalance() {
+        fetch("https://node-api.klaytnapi.com" + cmd, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-chain-id': '1001',
+                    'Authorization': auth
+                },
+                body: `{"id":1,"jsonrpc":"2.0","method":"klay_getBalance","params":["${userAddress}","latest"]}`
+            })
+            .then(rsp => rsp.json())
+            .then(response => {
+                console.log(hex2dec(response.result));
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+    function dec2hex(n) {
+        hex = n.toString(16);
+        return hex;
+    }
+
+    function hex2dec(hex) {
+        n = parseInt(hex, 16);
+        return n;
+    }
+</script>
+
+</html>

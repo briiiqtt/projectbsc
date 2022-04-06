@@ -6,11 +6,19 @@
 		insert into
 			users (
 				id,
-				password
+				password,
+				address,
+				key_id,
+				krn,
+				public_key
 			)
 			values(
 				#{id},
-				#{password}
+				#{password},
+				#{address},
+				#{keyId},
+				#{krn},
+				#{publicKey}
 			)
 	</insert>
 

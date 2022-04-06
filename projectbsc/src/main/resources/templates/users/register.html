@@ -9,6 +9,10 @@
 		<form action="/users/register" method="post" name="userForm">
 			id: <input type="text" name="id" id="id">
 			password: <input type="text" name="password" id="password">
+			<input type="hidden" name="address" id="address">
+			<input type="hidden" name="keyId" id="keyId">
+			<input type="hidden" name="krn" id="krn">
+			<input type="hidden" name="publicKey" id="publicKey">
 			<button id="btn" type="button">회원가입</button>
 		</form>
 	</div>
@@ -16,9 +20,33 @@
 
 <script>
 	document.getElementById('btn').addEventListener('click',function(){
-		
-		document.userForm.submit();
-		
+		addAccount();
 	});
+	
+	function addAccount(){
+		let auth = 'Basic S0FTS0xQVzNPVjdURVpDNUtENEJOMEJJOlhoWnhneEhOaFh1R0NVaXd6MkJ2WVRUOHhvS2kwQms5UFpoamE4OEQ=';
+		let cmd = '/v2/account';
+		fetch('https://wallet-api.klaytnapi.com'+cmd,{
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				'x-chain-id': '1001',
+				'Authorization': auth
+			}
+		})
+		.then(rsp=>rsp.json())
+		.then(r=>{
+			console.log(r);
+			document.userForm.address.value = r.address;
+			document.userForm.keyId.value = r.keyId;
+			document.userForm.krn.value = r.krn;
+			document.userForm.publicKey.value = r.publicKey;
+			document.userForm.submit();
+		})
+		.catch(err => {
+			  console.error(err);
+		}); 
+	}
+
 </script>
 </html>
