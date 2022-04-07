@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService {
 		return user.getPassword().equals(userMapper.getPassword(user));
 	}
 
+	@Override
+	public User findUser(User user) {
+		return userMapper.findUser(user);
+	}
+
 }

@@ -261,9 +261,11 @@
 		<em id="message">&nbsp;</em>
 	</p>
 	<hr>
-	<h3>현재 사용자: <span th:text="${userId}"></span></h3>
+	<h3>현재 사용자: <span th:text="${userId}"></span></h3><br>
+	<h6>잔고 : <span id="balance" th:text="${address}">-</span>&nbsp;MNGTK</h6>
 	<hr>
-	<a href="/">로그아웃</a>
+	<button onclick="document.location='/users/rank'">랭킹</button>
+	<button onclick="document.location='/'">로그아웃</button>
 
 	<script type="text/javascript">
 		// Canvas Avoid the Bullets
@@ -968,5 +970,14 @@
 		})();
 	</script>
 </body>
-
+<script>
+	function getBalance(id){
+		
+		
+		fetch('/users/address?id='+id)
+		.then(r=>r.json())
+		.then(r=>console.log(r));
+		
+	}
+</script>
 </html>

@@ -38,4 +38,13 @@
 			id = #{id}
 	</select>
 	
+	<select id="findUser" resultType="com.jamong.projectbsc.dto.User" parameterType="com.jamong.projectbsc.dto.User">
+		select
+			id, password, address, key_id, krn, public_key
+		from
+			users
+		where
+			id = #{id}
+	</select>
+	
 </mapper>

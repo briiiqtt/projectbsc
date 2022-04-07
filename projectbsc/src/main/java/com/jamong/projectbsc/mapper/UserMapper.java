@@ -14,4 +14,5 @@ public interface UserMapper {
 	int addUser(User user);
 	List<User> userList();
 	String getPassword(User user);
+	User findUser(User user);
 }
