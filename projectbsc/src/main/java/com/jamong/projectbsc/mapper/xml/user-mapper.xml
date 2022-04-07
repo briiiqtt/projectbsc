@@ -6,19 +6,11 @@
 		insert into
 			users (
 				id,
-				password,
-				address,
-				key_id,
-				krn,
-				public_key
+				address
 			)
 			values(
 				#{id},
-				#{password},
-				#{address},
-				#{keyId},
-				#{krn},
-				#{publicKey}
+				#{address}
 			)
 	</insert>
 
@@ -40,11 +32,11 @@
 	
 	<select id="findUser" resultType="com.jamong.projectbsc.dto.User" parameterType="com.jamong.projectbsc.dto.User">
 		select
-			id, password, address, key_id, krn, public_key
+			id, address
 		from
 			users
 		where
-			id = #{id}
+			lower(address) = #{address}
 	</select>
 	
 </mapper>

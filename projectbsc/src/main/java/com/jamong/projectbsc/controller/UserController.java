@@ -41,20 +41,28 @@ public class UserController {
 		return "users/rank";
 	}
 
-	@PostMapping("login")
-	public String login(Model model, User user) {
-		if (userService.login(user)) {
-			model.addAttribute("userId", user.getId());
-			return "game/game";
-		} else {
-			return "users/error";
-		}
-	}
-
-	@GetMapping("address")
+//	@PostMapping("login")
+//	public String login(Model model, User user) {
+//		if (userService.login(user)) {
+//			model.addAttribute("userId", user.getId());
+//			return "game/game";
+//		} else {
+//			return "users/error";
+//		}
+//	}
+//
+	@GetMapping("getid")
 	@ResponseBody
-	public String getAddress(Model model, User user) {
-		return userService.findUser(user).getAddress();
+	public Map<String,String> getAddress(Model model, User user) {
+		System.out.println(user.getAddress());
+		
+		Map<String,String> map = new HashMap<>();
+		try {
+			map.put("id", userService.findUser(user).getId());
+		} catch (NullPointerException e) {
+			map.put("id", "null");
+		}
+		return map;
 	}
 
 }

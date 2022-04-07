@@ -261,11 +261,11 @@
 		<em id="message">&nbsp;</em>
 	</p>
 	<hr>
-	<h3>현재 사용자: <span th:text="${userId}"></span></h3><br>
-	<h6>잔고 : <span id="balance" th:text="${address}">-</span>&nbsp;MNGTK</h6>
+	<h1>현재 사용자: <span th:text="${userId}" id="userId"></span></h1><br>
+	<h3>잔고 : <span id="balance" th:text="${address}">-</span>&nbsp;MNGTK</h3>
 	<hr>
 	<button onclick="document.location='/users/rank'">랭킹</button>
-	<button onclick="document.location='/'">로그아웃</button>
+<!-- 	<button onclick="document.location='/'">로그아웃</button> -->
 
 	<script type="text/javascript">
 		// Canvas Avoid the Bullets
@@ -483,7 +483,7 @@
 						if (keycode == 32) return true;
 						else score.send();
 					} else if (game.status == 'end' || game.status == 'replay' || game.status == 'replayend') game
-				.reset();
+						.reset();
 				}
 				if (keycode == 37) key.left = true;
 				if (keycode == 38) key.up = true;
@@ -615,7 +615,7 @@
 						context.font = '11px tahoma';
 						context.fillStyle = 'rgba(255,255,255,0.65)';
 						context.fillText('Press Enter or Spacebar to Start', canvas.width / 2, canvas.height / 2 +
-						18);
+							18);
 						context.fillStyle = 'rgba(255,255,255,0.3)';
 						context.fillRect(165, 152, 170, 1);
 
@@ -800,7 +800,7 @@
 			},
 
 			send: function () {
-	
+
 				/*
 
 				//name, score, bullets, killerbullet, coords
@@ -827,17 +827,17 @@
 				// document.scoreFrm.submit();
 
 				let formData = new FormData();
-				formData.append('id',document.scoreFrm.id.value);
-				formData.append('score',document.scoreFrm.score.value);
-				
-				fetch('/score/record',{
-					method: 'post',
-					body: formData
-				})
-				.then(()=>{
-					alert('등록됨');
-				});
-				
+				formData.append('address', klaytn.selectedAddress);
+				formData.append('score', document.scoreFrm.score.value);
+
+				fetch('/score/record', {
+						method: 'post',
+						body: formData
+					})
+					.then(() => {
+						alert('등록됨');
+					});
+
 			},
 
 			receive: function () {
@@ -914,14 +914,15 @@
 
 		function ajaxcontrol() {
 			this.afterfunction = null;
-			this.send = null;/*function (url, query, afterfunction) {
-				this.afterfunction = afterfunction;
-				ajax = (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
-				ajax.open('POST', url, true);
-				ajax.onreadystatechange = this.readystatechange;
-				ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=euc-kr");
-				ajax.send(query);
-			}*/
+			this.send = null;
+			/*function (url, query, afterfunction) {
+							this.afterfunction = afterfunction;
+							ajax = (window.ActiveXObject) ? new ActiveXObject("Microsoft.XMLHTTP") : new XMLHttpRequest();
+							ajax.open('POST', url, true);
+							ajax.onreadystatechange = this.readystatechange;
+							ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=euc-kr");
+							ajax.send(query);
+						}*/
 			this.readystatechange = function () {
 				if (ajax.readyState == 4) {
 					if (ajax.status == 200) {
@@ -971,13 +972,78 @@
 	</script>
 </body>
 <script>
-	function getBalance(id){
-		
-		
-		fetch('/users/address?id='+id)
-		.then(r=>r.json())
-		.then(r=>console.log(r));
-		
+	function getBalance_Deprecated(id) {
+
+		let address = null;
+
+		fetch('/users/address?id=' + id)
+			.then(r => {
+
+				fetch('https://kip7-api.klaytnapi.com/v1/contract/kip7test/account/0x80C2272266C86d7d6FA292aB11FE5E5c261955eB/balance', {
+						method: 'get',
+						headers: {
+							'Content-Type': 'application/json',
+							'x-chain-id': '1001',
+							'Authorization': 'Basic S0FTS1NLSVBKSE01MzNWQlpOVjQ0RTQyOnNOd1NqM2VoYzNsWVpLd2pzQlNJdXZrU0tWV2NKWTF0b2I1NlRmLWw='
+						}
+					})
+					.then(r => r.json())
+					.then(r => {
+						let balance = parseInt(r.balance, 16);
+
+						document.getElementById('balance').innerText = balance;
+					})
+					.catch(err => console.log(err));
+
+			})
+
+	}
+
+	function getBalance() {
+
+		fetch(`https://kip7-api.klaytnapi.com/v1/contract/kip7test/account/${klaytn.selectedAddress}/balance`, {
+				method: 'get',
+				headers: {
+					'Content-Type': 'application/json',
+					'x-chain-id': '1001',
+					'Authorization': 'Basic S0FTS1NLSVBKSE01MzNWQlpOVjQ0RTQyOnNOd1NqM2VoYzNsWVpLd2pzQlNJdXZrU0tWV2NKWTF0b2I1NlRmLWw='
+				}
+			})
+			.then(r => r.json())
+			.then(r => {
+				let balance = parseInt(r.balance, 16);
+
+				document.getElementById('balance').innerText = balance;
+			})
+			.catch(err => console.log(err));
+
+
+	}
+
+	window.onload = function () {
+		let id = klaytn.selectedAddress;
+		getBalance(klaytn.selectedAddress);
+		document.getElementById('userId').innerText = klaytn.selectedAddress;
+	}
+
+
+	function transfer(from, to, amount) {
+
+		amount = '0x' + amount.toString(16);
+		console.log(amount);
+		fetch('https://kip7-api.klaytnapi.com/v1/contract/kip7test/transfer', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'x-chain-id': '1001',
+					'Authorization': 'Basic S0FTS1NLSVBKSE01MzNWQlpOVjQ0RTQyOnNOd1NqM2VoYzNsWVpLd2pzQlNJdXZrU0tWV2NKWTF0b2I1NlRmLWw='
+				},
+				body: `{"from":"${from}","to":"${to}","amount":"${amount}"}`
+			})
+			.then(r => r.json())
+			.then(r => console.log(r))
+
 	}
 </script>
+
 </html>

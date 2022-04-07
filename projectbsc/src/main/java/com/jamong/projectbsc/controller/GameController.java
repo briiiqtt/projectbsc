@@ -16,9 +16,9 @@ public class GameController {
 		return "game/game";
 	}
 	
-	@GetMapping("/wallet")
-	public String wallet() {
-		return "wallet";
-	}
+//	@GetMapping("/wallet")
+//	public String wallet() {
+//		return "wallet";
+//	}
 	
 }

@@ -1,23 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
+
 <body>
 	<div align="center">
 		<div>
 			<h1>로그인</h1>
 		</div>
 		<div style="border: 1px solid black; width: 500px">
-			<form action="/users/login" method="post">
+			<!-- <form action="/users/login" method="post">
 				<input type="text" id="id" name="id"><br>
-				<input type="password" id="password" name="password"><br>
-				<button>login</button>
-			</form>
+				<input type="password" id="password" name="password"><br> -->
+			<button onclick="login()">login</button>
+			<!-- 			</form> -->
 			<br>
-		<button onclick="document.location='/users/register'">회원가입</button>	
 		</div>
 	</div>
 </body>
+<script>
+	function login() {
+		//const account = await klaytn.enable();
+		klaytn.enable()
+			.then((/*addresses*/) => {
+				// let address = addresses[0];
+				let address = klaytn.selectedAddress;
+				fetch('/users/getid?address=' + address)
+					.then(r => r.json())
+					.then(r => {
+						if (r.id != 'null') //TODO: 중복, 널체크
+							location.href = '/game?id='+r.id;
+						else
+							register(address);
+					})
+					.catch(err=>{
+						alert(err);
+					})
+
+			});
+	}
+	
+	function register(address){
+		id = prompt('id를 입력하세요');
+		
+		let formData = new FormData();
+		formData.append('id',id);
+		formData.append('address',address);
+
+		fetch('/users/register',{
+			method: 'post',
+			body: formData
+		})
+		.then(()=>{return true}) // TODO: id 중복인경우 처리하려고 true/false로 해둠
+		.catch((err)=>{
+			alert(err);
+			return false;
+		});
+	}
+</script>
+
 </html>
