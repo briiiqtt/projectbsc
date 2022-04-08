@@ -34,7 +34,7 @@
         	)
         )
         <if test='high != null and high != "" and low != null and low != ""'>
-	        where rn = 2
+	        where rn between #{high} and #{low}
         </if>
         
 	</select>
