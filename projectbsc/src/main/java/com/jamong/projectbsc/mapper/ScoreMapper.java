@@ -7,5 +7,5 @@ import com.jamong.projectbsc.dto.Score;
 
 public interface ScoreMapper {
 	int recordScore(Score score);
-	List<Map> getRank();
+	List<Map<String,String>> getRank(Map<String, String> map);
 }

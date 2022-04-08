@@ -17,18 +17,26 @@
 	</insert>
 	
 	<select id="getRank" resultType="map" parameterType="map">
-		select
-			u.id, u.address, max(s.score) "SCORE"
-		from
-			scores s
-    	join
-    		users u
-		    on s.address = u.address
-	    where
-            1=1
-        	and to_char(played_date) = to_char(sysdate)
-        group by u.id, u.address
-        order by 2 desc
+		select * from(
+			select rownum "RN", name, address, score from (
+				select
+					u.name "NAME", u.address "ADDRESS", max(s.score) "SCORE"
+				from
+					scores s
+    			join
+    				users u
+		    		on s.address = u.address
+	    		where
+            		1=1
+        			and to_char(played_date) = to_char(sysdate)
+        		group by u.name, u.address
+        		order by 3 desc
+        	)
+        )
+        <if test='high != null and high != "" and low != null and low != ""'>
+	        where rn = 2
+        </if>
+        
 	</select>
 	
 </mapper>

@@ -24,11 +24,6 @@ public class UserController {
 	@Autowired
 	ScoreService scoreService;
 
-	@GetMapping("register")
-	public String registerUser() {
-		return "users/register";
-	}
-
 	@PostMapping("register")
 	public String addUser(Model model, User user) {
 		return userService.addUser(user);
@@ -41,27 +36,13 @@ public class UserController {
 		return "users/rank";
 	}
 
-//	@PostMapping("login")
-//	public String login(Model model, User user) {
-//		if (userService.login(user)) {
-//			model.addAttribute("userId", user.getId());
-//			return "game/game";
-//		} else {
-//			return "users/error";
-//		}
-//	}
-//
 	@GetMapping("getid")
 	@ResponseBody
-	public Map<String,String> getAddress(Model model, User user) {
+	public Map<String, String> getAddress(Model model, User user) {
 		System.out.println(user.getAddress());
-		
-		Map<String,String> map = new HashMap<>();
-		try {
-			map.put("id", userService.findUser(user).getId());
-		} catch (NullPointerException e) {
-			map.put("id", "null");
-		}
+
+		Map<String, String> map = new HashMap<>();
+		map.put("id", userService.findUser(user).getName());
 		return map;
 	}
 

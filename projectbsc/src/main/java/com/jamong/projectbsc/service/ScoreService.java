@@ -8,5 +8,5 @@ import com.jamong.projectbsc.dto.Score;
 public interface ScoreService {
 	
 	int recordScore(Score score);
-	List<Map> getTotalRank();
+	List<Map<String,String>> getTotalRank();
 }

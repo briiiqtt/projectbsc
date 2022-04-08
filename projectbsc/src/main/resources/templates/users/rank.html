@@ -11,14 +11,14 @@
 		    <table border="1">
 		        <thead>
 		            <tr>
-		                <th style="width:400px">아이디</th>
+		                <th style="width:400px">이름</th>
 		                <th style="width:700px">지갑</th>
 		                <th style="width:300px">점수</th>
 		            </tr>
 		        </thead>
 		        <tbody>
 		            <tr th:each="d : ${data}">
-		                <td th:text="${d.ID}"></td>
+		                <td th:text="${d.NAME}"></td>
 		                <td th:text="${d.ADDRESS}"></td>
 		                <td th:text="${d.SCORE}"></td>
 		            </tr>

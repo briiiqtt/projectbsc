@@ -5,34 +5,18 @@
 	<insert id="addUser" parameterType="com.jamong.projectbsc.dto.User">
 		insert into
 			users (
-				id,
+				name,
 				address
 			)
 			values(
-				#{id},
+				#{name},
 				#{address}
 			)
 	</insert>
 
-	<select id="userList" resultType="com.jamong.projectbsc.dto.User">
-		select
-			*
-		from
-			users
-	</select> 
-	
-	<select id="getPassword" resultType="string">
-		select
-			password
-		from
-			users
-		where
-			id = #{id}
-	</select>
-	
 	<select id="findUser" resultType="com.jamong.projectbsc.dto.User" parameterType="com.jamong.projectbsc.dto.User">
 		select
-			id, address
+			name, address
 		from
 			users
 		where

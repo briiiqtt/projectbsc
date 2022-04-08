@@ -22,8 +22,8 @@ public class ScoreServiceImpl implements ScoreService{
 	}
 
 	@Override
-	public List<Map> getTotalRank() {
-		return scoreMapper.getRank();
+	public List<Map<String,String>> getTotalRank() {
+		return scoreMapper.getRank(null);
 	}
 
 }

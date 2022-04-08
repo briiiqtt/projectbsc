@@ -23,43 +23,65 @@
 </body>
 <script>
 	function login() {
-		//const account = await klaytn.enable();
+
+		if (window.klaytn == undefined) {
+			if (confirm('kaikas를 설치합니다.')) {
+				location.href = 'https://chrome.google.com/webstore/detail/kaikas/jblndlipeogpafnldhgmapagcccfchpi?hl=ko';
+			} else {
+				return false;
+			}
+		}
+		if (klaytn.networkVersion == 8217) {
+			alert('테스트넷으로 전환해주세요');
+			return false;
+		}
+
 		klaytn.enable()
-			.then((/*addresses*/) => {
-				// let address = addresses[0];
-				let address = klaytn.selectedAddress;
+			.then((addresses) => {
+				let address = addresses[0];
 				fetch('/users/getid?address=' + address)
 					.then(r => r.json())
 					.then(r => {
-						if (r.id != 'null') //TODO: 중복, 널체크
-							location.href = '/game?id='+r.id;
+						if (r.id !== undefined) //TODO: 중복, 널체크
+							location.href = '/game';
 						else
 							register(address);
 					})
-					.catch(err=>{
+					.catch(err => {
 						alert(err);
 					})
 
 			});
-	}
-	
-	function register(address){
-		id = prompt('id를 입력하세요');
-		
-		let formData = new FormData();
-		formData.append('id',id);
-		formData.append('address',address);
 
-		fetch('/users/register',{
-			method: 'post',
-			body: formData
-		})
-		.then(()=>{return true}) // TODO: id 중복인경우 처리하려고 true/false로 해둠
-		.catch((err)=>{
-			alert(err);
-			return false;
-		});
+
 	}
+
+	function register(address) {
+		let name = prompt('회원가입: 사용할 id를 입력하세요');
+		if (name === '' || name === null)
+			return false;
+
+		let formData = new FormData();
+		formData.append('name', name);
+		formData.append('address', address);
+
+		fetch('/users/register', {
+				method: 'post',
+				body: formData
+			})
+			.then(() => {
+				return true
+			}) // TODO: id 중복인경우 처리하려고 true/false로 해둠
+			.catch((err) => {
+				alert(err);
+				return false;
+			});
+	}
+
+	//TODO: 계정바뀌면 로그아웃시키게
+	/*klaytn.on('accountsChanged', function(accounts) {
+		
+	})*/
 </script>
 
 </html>
