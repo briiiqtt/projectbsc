@@ -19,8 +19,8 @@ import com.jamong.projectbsc.service.TransactionService;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
-	@Autowired ScoreMapper scoreMapper;
 	
+	@Autowired ScoreMapper scoreMapper;
 	
 	public static void main(String[] args) {
 		TransactionServiceImpl tsi = new TransactionServiceImpl();
