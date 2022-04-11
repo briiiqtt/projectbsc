@@ -253,8 +253,8 @@
 
 	<p>
 		<span id="onend">
-			<button id="btn_replay" onclick="document.location='/users/rank'">랭킹</button>
-			<button id="btn_addscore" onclick="score.send();">점수등록</button>
+<!-- 			<button id="btn_replay" onclick="document.location='/users/rank'">랭킹</button> -->
+<!-- 			<button id="btn_addscore" onclick="score.send();">점수등록</button> -->
 			<button id="btn_cancel" onclick="score.cancel();">취소</button>
 		</span>
 		<input id="nameinput" type="text" maxlength="20" value="이름 입력" />
@@ -267,7 +267,7 @@
 	<button onclick="document.location='/users/rank'">랭킹</button>
 	<br><br><br>
 	<button onclick="addMongTokenOnWallet()">지갑에 몽토큰 등록</button>
-<!-- 	<button onclick="document.location='/'">로그아웃</button> -->
+	<!-- 	<button onclick="document.location='/'">로그아웃</button> -->
 
 	<script type="text/javascript">
 		// Canvas Avoid the Bullets
@@ -663,6 +663,7 @@
 						context.fillText('Press Enter or Spacebar to Reset Game', canvas.width / 2, canvas.height -
 							15);
 
+
 					} else if (game.status == 'replay' || game.status == 'replayend') {
 
 						game.replayno = Math.round((new Date().getTime() - game.replaytime) / 10);
@@ -705,6 +706,30 @@
 					game.endtime = new Date().getTime();
 
 					util.onend.style.display = 'block';
+
+					//
+
+
+
+
+
+					document.scoreFrm.score.value = game.endtime - game.starttime;
+					let formData = new FormData();
+					formData.append('address', klaytn.selectedAddress);
+					formData.append('score', document.scoreFrm.score.value);
+
+					fetch('/score/record', {
+							method: 'post',
+							body: formData
+						})
+						.then(() => {
+							console.log('등록됨');
+						});
+
+
+
+
+					//
 
 				},
 
@@ -825,21 +850,23 @@
 					.receive);
 				
 */
-				document.scoreFrm.score.value = game.endtime - game.starttime;
-				// document.scoreFrm.submit();
 
-				let formData = new FormData();
-				formData.append('address', klaytn.selectedAddress);
-				formData.append('score', document.scoreFrm.score.value);
+				/*
+								document.scoreFrm.score.value = game.endtime - game.starttime;
+								// document.scoreFrm.submit();
 
-				fetch('/score/record', {
-						method: 'post',
-						body: formData
-					})
-					.then(() => {
-						alert('등록됨');
-					});
+								let formData = new FormData();
+								formData.append('address', klaytn.selectedAddress);
+								formData.append('score', document.scoreFrm.score.value);
 
+								fetch('/score/record', {
+										method: 'post',
+										body: formData
+									})
+									.then(() => {
+										alert('등록됨');
+									});
+				*/
 			},
 
 			receive: function () {

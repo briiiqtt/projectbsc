@@ -32,15 +32,12 @@ public class UserController {
 	@GetMapping("rank")
 	public String userList(Model model) {
 		model.addAttribute("data", scoreService.getTotalRank());
-		System.out.println(scoreService.getTotalRank());
 		return "users/rank";
 	}
 
 	@GetMapping("getid")
 	@ResponseBody
 	public Map<String, String> getAddress(Model model, User user) {
-		System.out.println(user.getAddress());
-
 		Map<String, String> map = new HashMap<>();
 		map.put("id", userService.findUser(user).getName());
 		return map;

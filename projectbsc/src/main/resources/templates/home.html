@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/layout}">
 
-<head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-</head>
-
-<body>
+<th:block layout:fragment="content">
 	<div align="center">
 		<div>
 			<h1>로그인</h1>
@@ -20,7 +17,7 @@
 			<br>
 		</div>
 	</div>
-</body>
+
 <script>
 	function login() {
 
@@ -83,5 +80,5 @@
 		
 	//})
 </script>
-
+</th:block>
 </html>
