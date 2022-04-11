@@ -7,7 +7,7 @@ import com.jamong.projectbsc.mapper.ScoreMapper;
 
 public interface TransactionService {
 
-	void distributeToken(String to);
+	Map<String, String> distributeToken(String to);
 	List<Map<String,String>> getUserRankedBetween(String high, String low);
 	
 }

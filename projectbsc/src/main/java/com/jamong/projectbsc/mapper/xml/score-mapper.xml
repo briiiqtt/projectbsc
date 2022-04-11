@@ -29,6 +29,7 @@
 	    		where
             		1=1
         			and to_char(played_date) = to_char(sysdate)
+        			and 190000 > to_number(to_char(played_date, 'hh24miss'))
         		group by u.name, u.address
         		order by 3 desc
         	)

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +20,12 @@ import com.jamong.projectbsc.service.TransactionService;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
-	
-	@Autowired ScoreMapper scoreMapper;
-	
-	public static void main(String[] args) {
-		TransactionServiceImpl tsi = new TransactionServiceImpl();
+	@Autowired
+	ScoreMapper scoreMapper;
 
-//		tsi.distributeToken("0x9d82fc36c8b80c0454fd0f4262f38d0053befede");
-		System.out.println(tsi.getUserRankedBetween("1", "2"));
-	}
-	
 	@Override
-	public void distributeToken(String to) {
+	public Map<String,String> distributeToken(String to) {
+		Map<String,String> map = new HashMap<>();
 		try {
 
 			URL url = new URL("https://kip7-api.klaytnapi.com/v1/contract/kip7test/transfer");
@@ -55,20 +50,26 @@ public class TransactionServiceImpl implements TransactionService {
 				while ((responseLine = br.readLine()) != null) {
 					response.append(responseLine.trim());
 				}
-				System.out.println(response.toString());
+				String responseString = response.toString();
+				JSONObject jo = new JSONObject(responseString);
+				
+				map.put("status", jo.getString("status"));
+				map.put("transactionHash", jo.getString("transactionHash"));
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			map.put("status","error");
+			map.put("transactionHash", e.getMessage());
 		}
+		return map;
 	}
 
 	@Override
-	public List<Map<String,String>> getUserRankedBetween(String high, String low) {
+	public List<Map<String, String>> getUserRankedBetween(String high, String low) {
 		Map<String, String> map = new HashMap<>();
 		map.put("high", high);
 		map.put("low", low);
 		return scoreMapper.getRank(map);
-	} 
-
+	}
+	
 }

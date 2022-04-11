@@ -9,3 +9,9 @@ create table users (
     name varchar2(512),
     address varchar2(512) primary key
     );
+drop table transactions;
+create table transactions(
+    status varchar2 (512),
+    transaction_hash varchar2(512),
+    transaction_date date
+    );
