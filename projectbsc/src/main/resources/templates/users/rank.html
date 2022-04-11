@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="~{layout/layout}">
+<th:block layout:fragment="content">
+
+
 	<div align="center">
 	    <h1>일일 랭킹</h1>
-	    <div style="border: 1px solid black; width: 500px; text-align: center">
-		    <table border="1">
+	    <div style="width: 500px;">
+		    <table border="1" style="text-align: center">
 		        <thead>
 		            <tr>
 		                <th style="width:400px">이름</th>
@@ -28,5 +28,6 @@
 		    <button onclick="location.href='/game'">게임화면으로</button>
 		</div>
 	</div>
-</body>
+	
+</th:block>
 </html>
