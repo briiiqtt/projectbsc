@@ -9,7 +9,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta http-equiv="imagetoolbar" content="no" />
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
 </head>
 
 <body>
@@ -19,8 +19,11 @@
 	</form>
 	<canvas id="canvas" width="500" height="300"></canvas>
 	<br>
-	<div id="healthBar" class="w3-container w3-green" style="width:100%">100%</div>
-
+	<div align="center" style="text-align: center; display: flex; justify-content: center;">
+		<div style="width: 50%; border: 1px solid black;">
+			<div id="healthBar" class="w3-container w3-green healthbar" style="width:100%; background: green;">100%</div>
+		</div>
+	</div>
 	<p>
 		<span id="onend">
 <!-- 			<button id="btn_replay" onclick="document.location='/users/rank'">랭킹</button> -->
@@ -153,7 +156,7 @@
 			var savekillerbullet = 0;
 			var killercr = 2;
 
-			var maxHealth = health = 30;
+			var maxHealth = health = 15;
 
 			//add bullet
 			function addbullet() {
@@ -171,16 +174,23 @@
 
 			let healthBar = document.getElementById('healthBar');
 			function restoreHealth(){
-				health = 30;
+				health = 15;
 				healthBar.style.width = '100%';
 				healthBar.innerHTML = '100%';
+				healthBar.style.background = 'green';
 			}
 			function hit(){
-				console.log(health)
-				health--;
-				let width = health / maxHealth * 100;
-				healthBar.style.width = width.toFixed(0) + '%';
-				healthBar.innerHTML = width.toFixed(2) + '%';
+				if(health>0)
+					health--;
+				let hpercent = health / maxHealth * 100;
+				if(hpercent < 66 && hpercent > 33){
+					healthBar.style.background = 'orange';
+				}
+				else if(hpercent <= 33){
+					healthBar.style.background = 'red';
+				}
+				healthBar.style.width = hpercent.toFixed(0) + '%';
+				healthBar.innerHTML = hpercent.toFixed(2) + '%';
 			}
 
 			//draw bullets

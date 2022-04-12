@@ -32,6 +32,7 @@ public class UserController {
 	@GetMapping("rank")
 	public String userList(Model model) {
 		model.addAttribute("data", scoreService.getTotalRank());
+		model.addAttribute("headerh1","RANK");
 		return "users/rank";
 	}
 
