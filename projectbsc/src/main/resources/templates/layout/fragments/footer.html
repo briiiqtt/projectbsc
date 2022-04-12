@@ -2,11 +2,45 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="footerFragment">
+<style>
+	.foott{
+		display: flex;
+		justify-content: space-around;
+	}
+	.footmenu1{
+		width: 32%;
+		height: 50px;
+		border: 1px solid black;
+		display: flex;
+		align-items: center;
+		text-align: center;
+	}
+</style>
 	<footer class="sticky-footer bg-white">
-		<div style="border: black solid 1px">
-			<h1>footer</h1>
+		<div class="foott" style="border: black solid 1px">
+			<div class="footmenu1" id="menu1">
+				MENU1
+			</div>
+			<div class="footmenu1" id="menu2">
+				MENU2
+			</div>
+			<div class="footmenu1" id="menu3">
+				MENU3
+			</div>
 		</div>
 	</footer>
+	
+	<script>
+		document.getElementById('menu1').addEventListener('click',function(){
+			location.href = '/shop';
+		});
+		document.getElementById('menu2').addEventListener('click',function(){
+			location.href = '/game';
+		});
+		document.getElementById('menu3').addEventListener('click',function(){
+			location.href = 'users/rank';
+		});
+	</script>
 </th:block>
 
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="~{layout/layout}">
+      layout:decorate="~{layout/layout}">
 <th:block layout:fragment="content">
 
 
@@ -9,6 +9,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta http-equiv="imagetoolbar" content="no" />
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 
 <body>
@@ -17,6 +18,8 @@
 		<input type="hidden" name="id" id="id" th:value="${userId}">
 	</form>
 	<canvas id="canvas" width="500" height="300"></canvas>
+	<br>
+	<div id="healthBar" class="w3-container w3-green" style="width:100%">100%</div>
 
 	<p>
 		<span id="onend">
@@ -150,6 +153,8 @@
 			var savekillerbullet = 0;
 			var killercr = 2;
 
+			var maxHealth = health = 30;
+
 			//add bullet
 			function addbullet() {
 				var i = bullet.length;
@@ -164,11 +169,24 @@
 				bullet[i].push((bullet[i][1] > 0) ? 0 : canvas.height);
 			}
 
+			let healthBar = document.getElementById('healthBar');
+			function restoreHealth(){
+				health = 30;
+				healthBar.style.width = '100%';
+				healthBar.innerHTML = '100%';
+			}
+			function hit(){
+				console.log(health)
+				health--;
+				let width = health / maxHealth * 100;
+				healthBar.style.width = width.toFixed(0) + '%';
+				healthBar.innerHTML = width.toFixed(2) + '%';
+			}
+
 			//draw bullets
 			function drawbullets() {
 				context.fillStyle = '#FF7';
 				for (var i = 0, random = 0, isdie = false; i < bullets; i++) {
-
 					if (game.status == 'ing') {
 
 						if (
@@ -177,8 +195,13 @@
 							context.isPointInPath(bullet[i][0], bullet[i][1] + 2) ||
 							context.isPointInPath(bullet[i][0] + 2, bullet[i][1] + 2)
 						) {
-							killerbullet = savekillerbullet = i;
-							isdie = true;
+							// killerbullet = savekillerbullet = i;
+							// isdie = true;
+							hit();
+							if(health < 1){
+								killerbullet = savekillerbullet = i;
+								isdie = true;
+							}
 						}
 
 						bullet[i][0] = bullet[i][0] + (bullet[i][2] * Math.sin(bullet[i][3]));
@@ -228,7 +251,9 @@
 
 					context.fillRect(bullet[i][0], bullet[i][1], 2, 2);
 
+
 				}
+
 
 				if (isdie) game.die();
 
@@ -325,6 +350,7 @@
 
 				reset: function () {
 
+					restoreHealth();
 					game.status = 'ready';
 					game.starttime = null;
 					game.time = [0, 0, 0];
@@ -615,23 +641,6 @@
 					.receive);
 				
 */
-
-				/*
-								document.scoreFrm.score.value = game.endtime - game.starttime;
-								// document.scoreFrm.submit();
-
-								let formData = new FormData();
-								formData.append('address', klaytn.selectedAddress);
-								formData.append('score', document.scoreFrm.score.value);
-
-								fetch('/score/record', {
-										method: 'post',
-										body: formData
-									})
-									.then(() => {
-										alert('등록됨');
-									});
-				*/
 			},
 
 			receive: function () {

@@ -21,6 +21,11 @@ public class GameController {
 		return "game/game";
 	}
 	
+	@GetMapping("/shop")
+	public String getShopPage() {
+		return "game/shop";
+	}
+	
 	@GetMapping("/distribute")
 	public void distribute() {
 		ds.scheduleDistribution();

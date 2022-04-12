@@ -5,9 +5,21 @@
 <th:block th:replace="/layout/fragments/head :: headFragment"></th:block>
 
 <body>
-	<th:block th:replace="/layout/fragments/top :: topbarFragment"></th:block>
-	<th:block layout:fragment="content"></th:block>
-	<th:block th:replace="/layout/fragments/footer :: footerFragment"></th:block>
-	<th:block th:replace="/layout/fragments/script :: scriptFragment"></th:block>
+	<div>
+		<div style="width: 600px; border: 1px solid black; position: relative; left: 38%">
+			<th:block th:replace="/layout/fragments/top :: topbarFragment"></th:block>
+		</div>	
+		
+		<div style="width: 600px; height: 800px; border: 1px solid black; position: relative; left: 38%">
+			<th:block layout:fragment="content"></th:block>
+		</div>
+		
+		
+		<div style="width: 600px; border: 1px solid black; position: relative; left: 38%">
+			<th:block th:replace="/layout/fragments/footer :: footerFragment"></th:block>
+		</div>
+		
+		<th:block th:replace="/layout/fragments/script :: scriptFragment"></th:block>
+	</div>
 </body>
 </html>
