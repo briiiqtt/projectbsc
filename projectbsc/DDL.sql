@@ -15,3 +15,9 @@ create table transactions(
     transaction_hash varchar2(512),
     transaction_date date
     );
+drop table aircrafts;
+create table aircrafts(
+    owner_address varchar2(512),
+    hp number,
+    metadata varchar2(512) primary key,
+    bin_selected number);

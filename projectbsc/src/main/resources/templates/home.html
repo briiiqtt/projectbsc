@@ -28,7 +28,7 @@
 					.then(r => r.json())
 					.then(r => {
 						if (r.id !== undefined) //TODO: 중복, 널체크
-							location.href = '/game';
+							location.href = '/game?address='+address;
 						else
 							register(address);
 					})

@@ -13,17 +13,19 @@
 </head>
 
 <body>
-	<form action="/score/record" name="scoreFrm" method="post">
-		<input type="hidden" name="score" id="score">
-		<input type="hidden" name="id" id="id" th:value="${userId}">
-	</form>
+<!-- 	<form action="/score/record" name="scoreFrm" method="post"> -->
+<!-- 		<input type="hidden" name="score" id="score"> -->
+<!-- 		<input type="hidden" name="id" id="id" th:value="${userId}"> -->
+<!-- 	</form> -->
 	<canvas id="canvas" width="500" height="300"></canvas>
 	<br>
 	<div align="center" style="text-align: center; display: flex; justify-content: center;">
 		<div style="width: 50%; border: 1px solid black;">
 			<div id="healthBar" class="w3-container w3-green healthbar" style="width:100%; background: green;">100%</div>
+			<input th:value="${hp}" type="hidden" id="hp">
 		</div>
 	</div>
+	<div th:text="' maxHP : '+${hp}"></div>
 	<p>
 		<span id="onend">
 <!-- 			<button id="btn_replay" onclick="document.location='/users/rank'">랭킹</button> -->
@@ -33,6 +35,7 @@
 		<input id="nameinput" type="text" maxlength="20" value="이름 입력" />
 		<em id="message">&nbsp;</em>
 	</p>
+	<h3 th:text="${user.name}">이름</h3>
 	<span th:text="${userId}" id="userId"></span><br>
 	<!-- 	<h3>잔고 : <span id="balance" th:text="${address}">-</span>&nbsp;MNGTK</h3> -->
 	<button onclick="document.location='/users/rank'">랭킹</button>
@@ -156,7 +159,7 @@
 			var savekillerbullet = 0;
 			var killercr = 2;
 
-			var maxHealth = health = 15;
+			var maxHp = hp = document.getElementById('hp').value;
 
 			//add bullet
 			function addbullet() {
@@ -174,23 +177,23 @@
 
 			let healthBar = document.getElementById('healthBar');
 			function restoreHealth(){
-				health = 15;
+				hp = document.getElementById('hp').value;
 				healthBar.style.width = '100%';
 				healthBar.innerHTML = '100%';
 				healthBar.style.background = 'green';
 			}
 			function hit(){
-				if(health>0)
-					health--;
-				let hpercent = health / maxHealth * 100;
-				if(hpercent < 66 && hpercent > 33){
+				if(hp>0)
+					hp--;
+				let hpPercent = hp / maxHp * 100;
+				if(hpPercent < 66 && hpPercent > 33){
 					healthBar.style.background = 'orange';
 				}
-				else if(hpercent <= 33){
+				else if(hpPercent <= 33){
 					healthBar.style.background = 'red';
 				}
-				healthBar.style.width = hpercent.toFixed(0) + '%';
-				healthBar.innerHTML = hpercent.toFixed(2) + '%';
+				healthBar.style.width = hpPercent.toFixed(0) + '%';
+				healthBar.innerHTML = hpPercent.toFixed(2) + '%';
 			}
 
 			//draw bullets
@@ -208,7 +211,7 @@
 							// killerbullet = savekillerbullet = i;
 							// isdie = true;
 							hit();
-							if(health < 1){
+							if(hp < 1){
 								killerbullet = savekillerbullet = i;
 								isdie = true;
 							}
@@ -514,18 +517,16 @@
 
 
 
-					document.scoreFrm.score.value = game.endtime - game.starttime;
 					let formData = new FormData();
 					formData.append('address', klaytn.selectedAddress);
-					formData.append('score', document.scoreFrm.score.value);
+					formData.append('score', game.endtime - game.starttime);
 
 					fetch('/score/record', {
 							method: 'post',
 							body: formData
 						})
-						.then(() => {
-							console.log('등록됨');
-						});
+						.then(() => console.log('등록됨'))
+						.catch(err=>console.log(err));
 
 
 

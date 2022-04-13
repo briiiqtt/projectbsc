@@ -8,7 +8,7 @@
 		justify-content: space-around;
 	}
 	.footmenu1{
-		width: 32%;
+		width: 24%;
 		height: 50px;
 		border: 1px solid black;
 		display: flex;
@@ -19,12 +19,15 @@
 	<footer class="sticky-footer bg-white">
 		<div class="foott" style="border: black solid 1px">
 			<div class="footmenu1" id="menu1">
-				SHOP
+				MARKET
 			</div>
 			<div class="footmenu1" id="menu2">
-				GAME
+				EQUIP
 			</div>
 			<div class="footmenu1" id="menu3">
+				GAME
+			</div>
+			<div class="footmenu1" id="menu4">
 				RANK
 			</div>
 		</div>
@@ -32,12 +35,15 @@
 	
 	<script>
 		document.getElementById('menu1').addEventListener('click',function(){
-			location.href = '/shop';
+			location.href = '/market';
 		});
 		document.getElementById('menu2').addEventListener('click',function(){
-			location.href = '/game';
+			location.href = '/equip?address='+klaytn.selectedAddress;
 		});
 		document.getElementById('menu3').addEventListener('click',function(){
+			location.href = '/game?address='+klaytn.selectedAddress;
+		});
+		document.getElementById('menu4').addEventListener('click',function(){
 			location.href = 'users/rank';
 		});
 	</script>

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jamong.projectbsc.dto.Score;
 import com.jamong.projectbsc.service.ScoreService;
@@ -15,9 +16,11 @@ public class ScoreController {
 	@Autowired ScoreService scoreService;
 	
 	@PostMapping("record")
-	public String recordScore(Score score) {
+	@ResponseBody
+	public boolean recordScore(Score score) {
+		System.out.println(score);
 		scoreService.recordScore(score);
-		return "game/game"; 
+		return true;
 	}
 	
 }

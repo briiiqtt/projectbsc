@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jamong.projectbsc.mapper.AircraftMapper">
+
+		<insert id="addToUser">
+			insert into
+				aircrafts(
+					owner_address,
+					hp,
+					metadata
+				)
+				values(
+					#{address},
+					#{hp},
+					#{metadata}
+				)
+				
+		</insert>
+		
+		<select id="findAircraft" parameterType="map" resultType="map">
+			select
+				hp, metadata, bin_selected
+			from
+				aircrafts
+			where
+				1=1
+				and owner_address = #{address}
+				and bin_selected = 1
+		</select>
+		
+		<select id="getAircraftList" parameterType="map" resultType="map">
+			select
+				hp, metadata, nvl(bin_selected, 0) "BIN_SELECTED"
+			from
+				aircrafts
+			where
+				1=1
+				and owner_address = #{address}
+		</select>
+		
+		<update id="changeSelectedToNull" parameterType="map">
+			update aircrafts 
+				set
+					bin_selected = null
+				where
+					owner_address = #{address}
+		</update>
+		
+		<update id="setSelected" parameterType="map">
+			update aircrafts 
+				set
+					bin_selected = 1
+				where
+					1=1
+					and owner_address = #{address}
+					and metadata = #{metadata}
+		</update>
+
+</mapper>

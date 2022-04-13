@@ -30,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
 
 			URL url = new URL("https://kip7-api.klaytnapi.com/v1/contract/kip7test/transfer");
 			String jsonString = "{\"from\":\"0x80C2272266C86d7d6FA292aB11FE5E5c261955eB\",\"to\":\"" + to
-					+ "\",\"amount\":\"0x100\"}";
+					+ "\",\"amount\":\"0x56bc75e2d63100000\"}";
 
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setDoOutput(true);
