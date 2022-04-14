@@ -27,7 +27,7 @@
 		        		<td>15</td>
 		        		<td><button onclick="changeAircraft('default')">ㅇ</button></td>
 		        	</tr>
-		            <tr th:each="a,idx : ${aircrafts}">
+		            <tr th:each="a,idx : ${aircrafts}" class="roww">
 		                <td th:text="${idx.index}+2"></td>
 		                <td class="equiprow" th:metadata="${a.METADATA}" th:selected="${a.BIN_SELECTED}">
 		                <th:block th:if="${a.BIN_SELECTED == 1}">😀</th:block>

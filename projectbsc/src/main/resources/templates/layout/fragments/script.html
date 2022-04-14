@@ -248,5 +248,28 @@
 		margin-right: -2px;
 	}
 </style>
+
+<script>
+	
+	let classNameArray = [
+		'footmenu1', 
+	]
+
+	document.addEventListener('mouseover',function(ev){
+		if(classNameArray.includes(ev.target.className)){
+			ev.target.style.background = 'lightgray';
+		}else if(ev.target.tagName == 'TD'){
+			ev.target.parentElement.style.background = 'lightgray';
+		}
+	})
+	document.addEventListener('mouseout',function(ev){
+		if(classNameArray.includes(ev.target.className)){
+			ev.target.style.background = 'white';
+		}else if(ev.target.tagName == 'TD'){
+			ev.target.parentElement.style.background = 'white';
+		}
+	})
+	
+</script>
 </th:block>
 </html>
