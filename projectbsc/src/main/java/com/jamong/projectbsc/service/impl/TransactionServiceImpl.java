@@ -24,27 +24,46 @@ public class TransactionServiceImpl implements TransactionService {
 	ScoreMapper scoreMapper;
 
 	@Override
-	public Map<String,String> distributeToken(String to) {
-		Map<String,String> map = new HashMap<>();
+	public Map<String, String> distributeToken(String to) {
+		Map<String, String> map = new HashMap<>();
+		HttpURLConnection con = null;
 		try {
 
 			URL url = new URL("https://kip7-api.klaytnapi.com/v1/contract/kip7test/transfer");
-			String jsonString = "{\"from\":\"0x80C2272266C86d7d6FA292aB11FE5E5c261955eB\",\"to\":\"" + to
+			String jsonString = "{\"from\":\"0x80C2272266C86d7d6FA292aB11FE5E5c261955eB1\",\"to\":\"" + to
 					+ "\",\"amount\":\"0x5f5e100\"}";
 
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con = (HttpURLConnection) url.openConnection();
 			con.setDoOutput(true);
 			con.setRequestMethod("POST");
 			con.setRequestProperty("x-chain-id", "1001");
 			con.setRequestProperty("Authorization",
 					"Basic S0FTS1NLSVBKSE01MzNWQlpOVjQ0RTQyOnNOd1NqM2VoYzNsWVpLd2pzQlNJdXZrU0tWV2NKWTF0b2I1NlRmLWw=");
 
-			try (OutputStream os = con.getOutputStream()) {
-				byte[] input = jsonString.getBytes("utf-8");
-				os.write(input, 0, input.length);
-			}
+			OutputStream os = con.getOutputStream();
+			byte[] input = jsonString.getBytes("utf-8");
+			os.write(input, 0, input.length);
 
-			try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"))) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+			StringBuilder response = new StringBuilder();
+			String responseLine = null;
+
+			while ((responseLine = br.readLine()) != null) {
+				response.append(responseLine.trim());
+			}
+			String responseString = response.toString();
+			JSONObject jo = new JSONObject(responseString);
+
+			System.out.println(responseString);
+
+			map.put("status", jo.getString("status"));
+			map.put("transactionHash", jo.getString("transactionHash"));
+
+		} catch (IOException e) {
+			map.put("status", "error");
+			map.put("transactionHash", e.getMessage());
+
+			try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getErrorStream(), "utf-8"))) {
 				StringBuilder response = new StringBuilder();
 				String responseLine = null;
 				while ((responseLine = br.readLine()) != null) {
@@ -52,17 +71,15 @@ public class TransactionServiceImpl implements TransactionService {
 				}
 				String responseString = response.toString();
 				JSONObject jo = new JSONObject(responseString);
-				
-				System.out.println(responseString);
-				
-				map.put("status", jo.getString("status"));
-				map.put("transactionHash", jo.getString("transactionHash"));
-			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
-			map.put("status","error");
-			map.put("transactionHash", e.getMessage());
+				System.out.println(responseString);
+
+				map.put("status", jo.getString("message"));
+				map.put("transactionHash", String.valueOf(jo.getInt("code")));
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 		return map;
 	}
@@ -74,5 +91,5 @@ public class TransactionServiceImpl implements TransactionService {
 		map.put("low", low);
 		return scoreMapper.getRank(map);
 	}
-	
+
 }
