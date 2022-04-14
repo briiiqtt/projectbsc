@@ -5,11 +5,19 @@
 
 	<div>
 		<h1>거래소</h1><br>
-		<span>ㅇㅇㅇ<button onclick="purchase()">구매</button></span><br>
-		metadata: <input type="text" id="metadata"><button onclick="addAircraft()">추가</button>
+		<span>미구현<button onclick="purchase()">구매</button></span><br>
 	</div>
 	<div>
-
+		<h3>&lt;test&gt;</h3>
+		metadata: <input type="text" id="metadata"><button onclick="addAircraft()">추가</button>
+		
+		<div>
+			https://metadata-store.klaytnapi.com/acd6bdf7-bdf1-615f-980b-c465dc3b4909/49c747db-581c-7974-64b9-203d85c5abfb.json
+		</div>
+		<div>
+			https://metadata-store.klaytnapi.com/acd6bdf7-bdf1-615f-980b-c465dc3b4909/db1525fd-71b0-0f7a-bdfc-7e25acf55179.json
+		</div>
+		
 	</div>
 
 
@@ -59,7 +67,10 @@
 						},
 						body: JSON.stringify(obj)
 					})
-					.then(r=>console.log(r))
+					.then(r=>{
+						console.log(r)
+						alert('추가됨');
+					})
 					.catch(err=>console.log(err));
 
 				})

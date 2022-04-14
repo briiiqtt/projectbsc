@@ -1,5 +1,6 @@
 package com.jamong.projectbsc.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class GameController {
 		model.addAttribute("headerh1", "GAME");
 		model.addAttribute("user", userMapper.findUser(user));
 
-		Map<String,String> queryResult = aircraftMapper.findAircraft(map);
+		Map<String, String> queryResult = aircraftMapper.findAircraft(map);
 		if (queryResult != null) {
 			model.addAttribute("hp", queryResult.get("HP"));
 		} else {
@@ -57,6 +58,7 @@ public class GameController {
 		return "game/market";
 	}
 
+	@ResponseBody
 	@GetMapping("/distribute")
 	public void distribute() {
 		ds.scheduleDistribution();
@@ -71,19 +73,27 @@ public class GameController {
 	@PostMapping("/aircraft")
 	@ResponseBody
 	public void addAircraft(@RequestBody Map<String, String> map) {
+		List<Map<String, String>> compare = equipmentService.getAircraftList(map);
+		for (Map<String, String> comp : compare) {
+			if (comp != null) {
+				if (comp.get("METADATA").equals(map.get("metadata"))) {
+					System.out.println("이미 등록된 토큰");
+					return;
+				}
+			}
+		}
 		aircraftMapper.addToUser(map);
 	}
-	
+
 	@PutMapping("/aircraft")
 	@ResponseBody
-	public void changeAircraft(@RequestBody Map<String,String> map) {
+	public void changeAircraft(@RequestBody Map<String, String> map) {
 		System.out.println(map);
 		equipmentService.changeAircraft(map);
 	}
-	
-	
+
 	@GetMapping("/equip")
-	public String getEquipmentPage(Model model, @RequestParam Map<String,String> map) {
+	public String getEquipmentPage(Model model, @RequestParam Map<String, String> map) {
 		model.addAttribute("headerh1", "EQUIPMENTS");
 		model.addAttribute("aircrafts", equipmentService.getAircraftList(map));
 		return "game/equip";

@@ -20,6 +20,7 @@ public class DistributionScheduler {
 	public void scheduleDistribution() {
 		List<Map<String,String>> rankers = ts.getUserRankedBetween("1", "10");
 		for(Map<String,String> ranker : rankers) {
+			System.out.println(ranker);
 			logMapper.addLog(ts.distributeToken(ranker.get("ADDRESS")));
 		}
 		

@@ -4,6 +4,9 @@
 <!-- 공통으로 쓰이는 script 파일을넣는다.-->
 <th:block th:fragment="scriptFragment">
 
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -247,28 +250,45 @@
 	#pages #btn_prevpage {
 		margin-right: -2px;
 	}
+	
+	tr, .footmenu1 {
+		transition: background-color .4s;
+	}
+	
+	tr:hover, .footmenu1:hover {
+		background-color: #ccbdd9;
+	}
+	
+	.footmenu1{
+		cursor: pointer;
+	}
+	
+	#headerh1{
+		
+	}
+	
 </style>
 
 <script>
 	
-	let classNameArray = [
-		'footmenu1', 
-	]
+// 	let classNameArray = [
+// 		'footmenu1', 
+// 	]
 
-	document.addEventListener('mouseover',function(ev){
-		if(classNameArray.includes(ev.target.className)){
-			ev.target.style.background = 'lightgray';
-		}else if(ev.target.tagName == 'TD'){
-			ev.target.parentElement.style.background = 'lightgray';
-		}
-	})
-	document.addEventListener('mouseout',function(ev){
-		if(classNameArray.includes(ev.target.className)){
-			ev.target.style.background = 'white';
-		}else if(ev.target.tagName == 'TD'){
-			ev.target.parentElement.style.background = 'white';
-		}
-	})
+// 	document.addEventListener('mouseover',function(ev){
+// 		if(classNameArray.includes(ev.target.className)){
+// 			ev.target.style.background = 'lightgray';
+// 		}else if(ev.target.tagName == 'TD'){
+// 			ev.target.parentElement.style.background = 'lightgray';
+// 		}
+// 	})
+// 	document.addEventListener('mouseout',function(ev){
+// 		if(classNameArray.includes(ev.target.className)){
+// 			ev.target.style.background = 'white';
+// 		}else if(ev.target.tagName == 'TD'){
+// 			ev.target.parentElement.style.background = 'white';
+// 		}
+// 	})
 	
 </script>
 </th:block>

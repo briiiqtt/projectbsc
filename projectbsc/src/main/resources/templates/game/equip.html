@@ -25,7 +25,7 @@
 		        		<td>default</td>
 		        		<td>기본 비행기입니다.</td>
 		        		<td>15</td>
-		        		<td><button onclick="changeAircraft('default')">ㅇ</button></td>
+		        		<td><button onclick="changeAircraft('default')">&nbsp;⩗&nbsp;</button></td>
 		        	</tr>
 		            <tr th:each="a,idx : ${aircrafts}" class="roww">
 		                <td th:text="${idx.index}+2"></td>
@@ -54,7 +54,7 @@
 	    	datas.push(r.name);
 	    	datas.push(r.description);
 	    	datas.push(r.attributes[0].value);
-	    	datas.push(`<button onclick="changeAircraft('${metadata}')">ㅇ</button>`);
+	    	datas.push(`<button onclick="changeAircraft('${metadata}')">&nbsp;⩗&nbsp;</button>`);
 	    	
 	    	for(let data of datas){
 	    		let td = document.createElement('td');
