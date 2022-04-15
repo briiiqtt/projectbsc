@@ -18,7 +18,7 @@ public class DistributionScheduler {
 
 	@Scheduled(cron = "0 0 19 * * *")
 	public void scheduleDistribution() {
-		List<Map<String,String>> rankers = ts.getUserRankedBetween("1", "10");
+		List<Map<String,String>> rankers = ts.getUserRankedBetween("1", "3");
 		for(Map<String,String> ranker : rankers) {
 			System.out.println(ranker);
 			logMapper.addLog(ts.distributeToken(ranker.get("ADDRESS")));
