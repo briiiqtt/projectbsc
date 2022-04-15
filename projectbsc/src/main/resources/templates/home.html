@@ -4,7 +4,7 @@
       layout:decorate="~{layout/layout}">
 <th:block layout:fragment="content">
 
-	<button onclick="login()">login</button>
+	<button onclick="login()" id="login">login</button>
 
 <script>
 	function login() {
@@ -42,7 +42,7 @@
 	}
 
 	function register(address) {
-		let name = prompt('회원가입: 사용할 id를 입력하세요');
+		let name = prompt('회원가입: 이름을 입력하세요');
 		if (name === '' || name === null)
 			return false;
 

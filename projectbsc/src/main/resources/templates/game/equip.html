@@ -4,102 +4,102 @@
 <th:block layout:fragment="content">
 
 	<div align="center">
-	    <div id="date"></div>
-	    <div style="width: 500px;">
-	    	<h1>내 비행기 목록</h1><br>
-		    <table border="1" style="text-align: center">
-		        <thead>
-		            <tr>
-		                <th style="width:80px">번호</th>
-		                <th style="width:80px">선택</th>
-		                <th style="width:320px">이름</th>
-		                <th style="width:500px">설명</th>
-		                <th style="width:250px">HP</th>
-		                <th>변경</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-		        	<tr>
-		        		<td>1</td>
-		        		<td id="default"></td>
-		        		<td>default</td>
-		        		<td>기본 비행기입니다.</td>
-		        		<td>15</td>
-		        		<td><button onclick="changeAircraft('default')">&nbsp;⩗&nbsp;</button></td>
-		        	</tr>
-		            <tr th:each="a,idx : ${aircrafts}" class="roww">
-		                <td th:text="${idx.index}+2"></td>
-		                <td class="equiprow" th:metadata="${a.METADATA}" th:selected="${a.BIN_SELECTED}">
-		                <th:block th:if="${a.BIN_SELECTED == 1}">😀</th:block>
-		                </td>
-		                
-		            </tr>
-		        </tbody>
-		    </table>
+		<div id="date"></div>
+		<div style="width: 500px;">
+			<h1>내 비행기 목록</h1><br>
+			<table border="1" style="text-align: center">
+				<thead>
+					<tr>
+						<th style="width:80px">번호</th>
+						<th style="width:80px">선택</th>
+						<th style="width:320px">이름</th>
+						<th style="width:500px">설명</th>
+						<th style="width:250px">HP</th>
+						<th>변경</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td id="default"></td>
+						<td>default</td>
+						<td>기본 비행기입니다.</td>
+						<td>15</td>
+						<td><button onclick="changeAircraft('default')">&nbsp;⩗&nbsp;</button></td>
+					</tr>
+					<tr th:each="a,idx : ${aircrafts}" class="roww">
+						<td th:text="${idx.index}+2"></td>
+						<td class="equiprow" th:metadata="${a.METADATA}" th:selected="${a.BIN_SELECTED}">
+							<th:block th:if="${a.BIN_SELECTED == 1}">😀</th:block>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 
 
-<script>
-	let rows = document.getElementsByClassName('equiprow');
-	for(let row of rows){
-		
-		let metadata = row.getAttribute('metadata');
-		
-		fetch(metadata)
-	    .then(r => r.json())
-	    .then(r =>{
-	    	
-	    	let datas = [];
-	    	datas.push(r.name);
-	    	datas.push(r.description);
-	    	datas.push(r.attributes[0].value);
-	    	datas.push(`<button onclick="changeAircraft('${metadata}')">&nbsp;⩗&nbsp;</button>`);
-	    	
-	    	for(let data of datas){
-	    		let td = document.createElement('td');
-	    		td.innerHTML = data;
-		    	row.parentElement.append(td);
-	    	}
-	    	
-	    })
-	    .catch(err => console.log(err));
-	}
-	
-	
-	function changeAircraft(metadata){
+	<script>
+		let rows = document.getElementsByClassName('equiprow');
+		for (let row of rows) {
 
-		let obj = {
+			let metadata = row.getAttribute('metadata');
+
+			fetch(metadata)
+				.then(r => r.json())
+				.then(r => {
+
+					let datas = [];
+					datas.push(r.name);
+					datas.push(r.description);
+					datas.push(r.attributes[0].value);
+					datas.push(`<button onclick="changeAircraft('${metadata}')">&nbsp;⩗&nbsp;</button>`);
+
+					for (let data of datas) {
+						let td = document.createElement('td');
+						td.innerHTML = data;
+						row.parentElement.append(td);
+					}
+
+				})
+				.catch(err => console.log(err));
+		}
+
+
+		function changeAircraft(metadata) {
+
+			let obj = {
 				'metadata': metadata,
 				'address': klaytn.selectedAddress
-		}
-		
-		fetch('/aircraft',{
-			method: 'put',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(obj)
-		})
-	    .then(() => location.reload())
-	    .catch(err => console.log(err));
-
-	}
-	
-	window.onload = function(){
-		let notDefault = true;
-		for(let row of rows){
-			if(row.getAttribute('selected') != null){
-				notDefault = false;
 			}
+
+			fetch('/aircraft', {
+				method: 'put',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(obj)
+			})
+				.then(() => location.reload())
+				.catch(err => console.log(err));
+
 		}
-		
-		if(notDefault){
-			document.getElementById('default').innerHTML = '😀';
+
+		window.onload = function () {
+			let notDefault = true;
+			for (let row of rows) {
+				if (row.getAttribute('selected') != null) {
+					notDefault = false;
+				}
+			}
+
+			if (notDefault) {
+				document.getElementById('default').innerHTML = '😀';
+			}
+
 		}
-		
-	}
-</script>
+	</script>
 
 </th:block>
 

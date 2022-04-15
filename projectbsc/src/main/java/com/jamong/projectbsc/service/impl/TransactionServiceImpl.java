@@ -24,14 +24,17 @@ public class TransactionServiceImpl implements TransactionService {
 	ScoreMapper scoreMapper;
 
 	@Override
-	public Map<String, String> distributeToken(String to) {
+	public Map<String, String> distributeToken(String to, int amount) {
+		
+		String amt = Integer.toHexString(amount*1000000);
+		
 		Map<String, String> map = new HashMap<>();
 		HttpURLConnection con = null;
 		try {
 
 			URL url = new URL("https://kip7-api.klaytnapi.com/v1/contract/kip7test/transfer");
 			String jsonString = "{\"from\":\"0x80C2272266C86d7d6FA292aB11FE5E5c261955eB\",\"to\":\"" + to
-					+ "\",\"amount\":\"0x989680\"}";
+					+ "\",\"amount\":\"0x"+amt+"\"}";
 
 			con = (HttpURLConnection) url.openConnection();
 			con.setDoOutput(true);

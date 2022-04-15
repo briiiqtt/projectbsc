@@ -35,17 +35,25 @@
 	
 	<script>
 		document.getElementById('menu1').addEventListener('click',function(){
-			location.href = '/market';
+			footMenuClicked('/market');
 		});
 		document.getElementById('menu2').addEventListener('click',function(){
-			location.href = '/equip?address='+klaytn.selectedAddress;
+			footMenuClicked('/equip?address='+klaytn.selectedAddress);
 		});
 		document.getElementById('menu3').addEventListener('click',function(){
-			location.href = '/game?address='+klaytn.selectedAddress;
+			footMenuClicked('/game?address='+klaytn.selectedAddress);
 		});
 		document.getElementById('menu4').addEventListener('click',function(){
-			location.href = '/users/rank';
+			footMenuClicked('/users/rank');
 		});
+		
+		function footMenuClicked(url){
+			if(!document.getElementById('login')){
+				location.href = url;
+			} else{
+				location.href = '/';
+			}
+		}
 	</script>
 </th:block>
 
